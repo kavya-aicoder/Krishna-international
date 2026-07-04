@@ -442,9 +442,12 @@ const App = () => {
             </div>
           </a>
           <div className="footer-links">
-            {['About','Products','Our Trust','Contact'].map(l => (
-              <a key={l} href={`#${l.toLowerCase().replace(' ','')}`}>{l}</a>
-            ))}
+            {['About','Products','Our Trust','Contact'].map((label) => {
+              const href = label === 'Our Trust' ? '#certifications' : `#${label.toLowerCase().replace(' ', '')}`;
+              return (
+                <a key={label} href={href}>{label}</a>
+              );
+            })}
           </div>
           <p style={{ color: 'var(--text-muted)', fontSize: 'var(--text-xs)' }}>
             &copy; {new Date().getFullYear()} Krishna International. All rights reserved.
