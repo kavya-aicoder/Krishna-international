@@ -230,14 +230,15 @@ export default function ProductShowcase() {
   const variants = getVariants(dir);
 
   return (
-    <section
-      ref={sectionRef}
-      className="ps-section"
-      onMouseMove={onMouseMove}
-      onMouseLeave={onMouseLeave}
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
-    >
+    <>
+      <section
+        ref={sectionRef}
+        className="ps-section desktop-only"
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
       {/* ── Background ── */}
       <div className="ps-bg-grid" aria-hidden="true" />
       <div className="ps-bg-glow" aria-hidden="true" />
@@ -385,5 +386,40 @@ export default function ProductShowcase() {
         </div>
       </div>
     </section>
-  );
+
+    <section className="ps-mobile-list mobile-only">
+      <div className="mobile-products">
+        {PRODUCTS.map((product) => (
+          <article key={product.id} className="mobile-product-card glass">
+            <div className="mobile-product-img-wrap">
+              <img src={product.image} alt={product.name} className="mobile-product-img" />
+            </div>
+            <div className="mobile-product-body">
+              <div className="ps-text-meta">
+                <span className="ps-tag">{product.tag}</span>
+                <span className="ps-counter">{product.id} / {PRODUCTS.length}</span>
+              </div>
+              <h3 className="mobile-product-name">{product.name}</h3>
+              <p className="mobile-product-desc">{product.desc}</p>
+              <div className="ps-pills mobile-pills">
+                {product.pills.map(({ label, value }) => (
+                  <div key={label} className="ps-pill glass">
+                    <span className="ps-pill-label">{label}</span>
+                    <span className="ps-pill-value">{value}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="ps-chips mobile-chips">
+                {product.chips.map((chip) => (
+                  <span key={chip} className="ps-chip">{chip}</span>
+                ))}
+              </div>
+              <a href="#contact" className="btn-full">ENQUIRE NOW</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  </>
+);
 }

@@ -72,8 +72,7 @@ function FloatField({ label, type = 'text', as = 'input', rows, required }) {
 
 /* ─── Marquee ticker strip ───────────────────────────────── */
 const MARQUEE_ITEMS = [
-  'ISO 9001:2015 Certified', 'CE Marked', '60,000 PSI Rated',
-  '25+ Years Experience', '50+ Countries', 'SS316 · Inconel · Duplex',
+  'ISO 9001:2015 Certified', 'CE Marked', '60,000 PSI Rated',  'SS316 · Inconel · Duplex',
   'Faridabad & Mathura', 'Precision Machined', 'Zero-Leak Design',
 ];
 
@@ -157,6 +156,7 @@ const NAV_LINKS = ['HOME','ABOUT','PRODUCTS','OUR TRUST','CONTACT'];
 /* ─── Main App ───────────────────────────────────────────── */
 const App = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
@@ -178,6 +178,16 @@ const App = () => {
       window.removeEventListener('mousemove', onMouseMove);
     };
   }, [onMouseMove]);
+
+  useEffect(() => {
+    const closeOnResize = () => {
+      if (window.innerWidth > 900 && menuOpen) setMenuOpen(false);
+    };
+    window.addEventListener('resize', closeOnResize);
+    return () => window.removeEventListener('resize', closeOnResize);
+  }, [menuOpen]);
+
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
 
   return (
     <>
@@ -219,8 +229,19 @@ const App = () => {
           </motion.a>
 
           {/* Emil Kowalski — staggered nav entrance */}
+          <button
+            className={`nav-toggle${menuOpen ? ' open' : ''}`}
+            onClick={() => setMenuOpen((prev) => !prev)}
+            aria-label="Toggle menu"
+            aria-expanded={menuOpen}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+
           <motion.div
-            className="nav-links"
+            className={`nav-links${menuOpen ? ' open' : ''}`}
             variants={stagger(0.07, 0.4)}
             initial="hidden"
             animate="visible"
@@ -237,12 +258,14 @@ const App = () => {
                   variants={fadeUp(0, 12)}
                   whileHover={{ opacity: 1 }}
                   whileTap={{ scale: 0.93, transition: { duration: 0.08 } }}
+                  onClick={closeMenu}
                 >
                   {label}
                 </motion.a>
               );
             })}
           </motion.div>
+          <div className={`mobile-nav-backdrop${menuOpen ? ' open' : ''}`} onClick={closeMenu} />
         </div>
       </motion.nav>
 
@@ -329,76 +352,80 @@ const App = () => {
             <h2 className="section-title">GET IN <span>TOUCH</span></h2>
           </motion.div>
           <motion.div variants={fadeUp(0.1)} className="contact-grid glass" style={{ padding: 'clamp(2rem,4vw,3.5rem)' }}>
-            <div className="contact-info">
-              <h3>Head Quarter</h3>
-              {[
-                { icon: '📍', text: 'Plot No. 36, Mujeri Industrial Area, Gali No. 4, Sector-70, Ballabgarh, Faridabad (HR) - 121004' },
-                { icon: '📧', text: 'krishnainternational2006@gmail.com' },
-                { icon: '📞', text: '+91 82878 86319 / +91 98216 16398' },
-              ].map(({ icon, text }) => (
-                <div key={text} className="info-item">
-                  <div className="info-icon">{icon}</div>
-                  <p style={{ color: 'var(--text-secondary)' }}>{text}</p>
-                </div>
-              ))}
+              <div className="contact-card">
+              <div className="contact-info">
+                <h3>Head Quarter</h3>
+                {[
+                  { icon: '📍', text: 'Plot No. 36, Mujeri Industrial Area, Gali No. 4, Sector-70, Ballabgarh, Faridabad (HR) - 121004' },
+                  { icon: '📧', text: 'krishnainternational2006@gmail.com' },
+                  { icon: '📞', text: '+91 82878 86319 / +91 98216 16398' },
+                ].map(({ icon, text }) => (
+                  <div key={text} className="info-item">
+                    <div className="info-icon">{icon}</div>
+                    <p style={{ color: 'var(--text-secondary)' }}>{text}</p>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Enhanced contact CTA */}
-            <div className="contact-form" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2.5rem' }}>
-              {/* Decorative line */}
-              <motion.div
-                initial={{ width: 0, opacity: 0 }}
-                whileInView={{ width: '60px', opacity: 1 }}
-                transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
-                style={{ height: '2px', background: 'linear-gradient(90deg, transparent, var(--accent-primary), transparent)', margin: '0 auto' }}
-              />
+            <div className="contact-card">
+              <div className="contact-form" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2.5rem' }}>
+                {/* Decorative line */}
+                <motion.div
+                  initial={{ width: 0, opacity: 0 }}
+                  whileInView={{ width: '60px', opacity: 1 }}
+                  transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
+                  style={{ height: '2px', background: 'linear-gradient(90deg, transparent, var(--accent-primary), transparent)', margin: '0 auto' }}
+                />
 
-              {/* Heading */}
-              <motion.div
-                variants={fadeUp(0)}
-                style={{ textAlign: 'center', maxWidth: '400px' }}
-              >
-                <h3 style={{ fontSize: 'var(--text-lg)', marginBottom: '0.75rem', color: 'var(--text-primary)' }}>
-                  Ready to discuss your project?
-                </h3>
-                <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
-                  Connect with our team via WhatsApp for instant response and quick solutions.
-                </p>
-              </motion.div>
+                {/* Heading */}
+                <motion.div
+                  variants={fadeUp(0)}
+                  style={{ textAlign: 'center', maxWidth: '400px' }}
+                >
+                  <h3 style={{ fontSize: 'var(--text-lg)', marginBottom: '0.75rem', color: 'var(--text-primary)' }}>
+                    Ready to discuss your project?
+                  </h3>
+                  <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                    Connect with our team via WhatsApp for instant response and quick solutions.
+                  </p>
+                </motion.div>
 
-              {/* WhatsApp Button with Icon */}
-              <motion.a
-                href="https://wa.me/+919643145910"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-submit"
-                style={{ textDecoration: 'none', display: 'inline-flex', gap: '0.75rem' }}
-                whileHover={{ scale: 1.015 }}
-                whileTap={{ scale: 0.97, transition: { duration: 0.08 } }}
-              >
-                <span style={{ fontSize: '1.2rem' }}>💬</span>
-                <span>SEND INQUIRY</span>
-                <motion.span
-                  initial={{ x: 0 }}
-                  whileHover={{ x: 5 }}
-                  transition={springSnappy}
-                >→</motion.span>
-              </motion.a>
+                {/* WhatsApp Button with Icon */}
+                <motion.a
+                  href="https://wa.me/+919643145910"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-submit"
+                  style={{ textDecoration: 'none', display: 'inline-flex', gap: '0.75rem' }}
+                  whileHover={{ scale: 1.015 }}
+                  whileTap={{ scale: 0.97, transition: { duration: 0.08 } }}
+                >
+                  <span style={{ fontSize: '1.2rem' }}>💬</span>
+                  <span>SEND INQUIRY</span>
+                  <motion.span
+                    initial={{ x: 0 }}
+                    whileHover={{ x: 5 }}
+                    transition={springSnappy}
+                  >→</motion.span>
+                </motion.a>
 
-              {/* Optional response time badge */}
-              <motion.div
-                initial={{ opacity: 0, y: 8 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2, ease: EASE_OUT_EXPO }}
-                style={{
-                  fontSize: 'var(--text-xs)',
-                  color: 'var(--text-muted)',
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase'
-                }}
-              >
-                ⚡ Typically responds within 2 hours
-              </motion.div>
+                {/* Optional response time badge */}
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2, ease: EASE_OUT_EXPO }}
+                  style={{
+                    fontSize: 'var(--text-xs)',
+                    color: 'var(--text-muted)',
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase'
+                  }}
+                >
+                  ⚡ Typically responds within 2 hours
+                </motion.div>
+              </div>
             </div>
           </motion.div>
         </Section>

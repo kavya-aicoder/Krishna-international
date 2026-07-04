@@ -241,6 +241,52 @@
   backdrop-filter: blur(10px);
 }
 
+@media (max-width: 900px) {
+  .hero-content {
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 1.5rem;
+  }
+
+  .hero-text-wrapper {
+    max-width: 100%;
+  }
+
+  .title {
+    font-size: clamp(2.1rem, 8vw, 3.6rem);
+  }
+
+  .description {
+    font-size: clamp(0.9rem, 3vw, 1rem);
+  }
+
+  .cta-group {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-sequence-container {
+    min-height: 100vh;
+    height: auto;
+  }
+
+  .hero-canvas-wrapper {
+    transform: scale(1.02);
+  }
+
+  .hero-overlay {
+    background: linear-gradient(180deg, rgba(3,7,18,0.94) 0%, rgba(3,7,18,0.85) 30%, rgba(3,7,18,0.2) 100%);
+  }
+}
+
 .scroll-indicator {
   position: absolute;
   bottom: clamp(1.8rem, 4.5vh, 3.2rem);
