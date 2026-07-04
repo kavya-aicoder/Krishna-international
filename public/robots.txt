@@ -7,4 +7,4 @@ Disallow: /private/
 Crawl-delay: 1
 
 # Sitemap location
-Sitemap: https://krishnainternational.com/sitemap.xml
+Sitemap: https://krishna-international.netlify.app/sitemap.xml

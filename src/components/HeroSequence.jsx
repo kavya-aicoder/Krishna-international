@@ -148,7 +148,9 @@ const HeroSequence = () => {
               EXPLORE PRODUCTS{' '}
               <motion.span whileHover={{ x: 6 }} transition={{ type: 'spring', stiffness: 400 }}>→</motion.span>
             </motion.a>
-            <motion.button
+            <motion.a
+              href="/catalogue.pdf"
+              download
               className="btn-secondary"
               whileHover={{ y: -5, borderColor: 'rgba(255,255,255,0.5)' }}
               whileTap={{ scale: 0.96 }}
@@ -156,7 +158,7 @@ const HeroSequence = () => {
             >
               DOWNLOAD CATALOGUE{' '}
               <motion.span whileHover={{ y: 3 }} transition={{ type: 'spring', stiffness: 400 }}>↓</motion.span>
-            </motion.button>
+            </motion.a>
           </motion.div>
         </motion.div>
       </div>
