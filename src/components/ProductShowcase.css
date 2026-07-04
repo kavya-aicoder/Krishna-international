@@ -1,0 +1,346 @@
+/* ── Section — full viewport ─────────────────────────────── */
+.ps-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #030712;
+  padding: 0;
+}
+
+/* Background grid */
+.ps-bg-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(37,99,235,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37,99,235,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  z-index: 0;
+}
+
+/* Volumetric glow */
+.ps-bg-glow {
+  position: absolute;
+  top: 42%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 75vw; height: 75vw;
+  max-width: 900px; max-height: 900px;
+  background: radial-gradient(ellipse at center, rgba(37,99,235,0.14) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Particles */
+.ps-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ps-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(37,99,235,0.6);
+  box-shadow: 0 0 5px 1px rgba(37,99,235,0.3);
+}
+
+/* ── Blueprint rings (absolute center) ──────────────────── */
+.ps-rings-center {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.ps-ring {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid rgba(37,99,235,0.18);
+}
+
+.ps-ring.dashed {
+  border-style: dashed;
+  border-color: rgba(37,99,235,0.08);
+}
+
+/* ── Navigation arrows ───────────────────────────────────── */
+.ps-nav {
+  position: absolute;
+  top: 38%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(37,99,235,0.28);
+  background: rgba(3,7,18,0.7);
+  backdrop-filter: blur(14px);
+  color: #93C5FD;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.ps-nav:hover {
+  border-color: rgba(37,99,235,0.65);
+  background: rgba(37,99,235,0.12);
+  box-shadow: 0 0 22px rgba(37,99,235,0.22);
+}
+
+.ps-nav-left  { left:  clamp(1rem, 3vw, 3.5rem); }
+.ps-nav-right { right: clamp(1rem, 3vw, 3.5rem); }
+
+/* ── Image zone (top 60%) ────────────────────────────────── */
+.ps-image-zone {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 65vh;
+  flex-shrink: 0;
+  perspective: 1200px;
+}
+
+.ps-img-wrap {
+  position: relative;
+  width: clamp(340px, 55vw, 680px);
+  height: clamp(340px, 55vw, 680px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+.ps-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 30px 80px rgba(37,99,235,0.45))
+    drop-shadow(0 0 24px rgba(37,99,235,0.25));
+  user-select: none;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Halo glow behind product */
+.ps-halo {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%; height: 60%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(37,99,235,0.28) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(24px);
+}
+
+/* Platform shadow below product */
+.ps-shadow {
+  position: absolute;
+  bottom: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 20px;
+  background: radial-gradient(ellipse, rgba(37,99,235,0.4) 0%, transparent 70%);
+  filter: blur(14px);
+  pointer-events: none;
+}
+
+/* ── Text zone (bottom 40%) ──────────────────────────────── */
+.ps-text-zone {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 clamp(1.5rem, 5vw, 6rem) clamp(3rem, 5vh, 5rem);
+  gap: 1.5rem;
+}
+
+.ps-text-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.75rem, 1.5vh, 1.1rem);
+  max-width: 860px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Meta row */
+.ps-text-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ps-tag {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.58rem, 0.7vw, 0.65rem);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #3B82F6;
+  background: rgba(37,99,235,0.1);
+  border: 1px solid rgba(37,99,235,0.22);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.ps-counter {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.58rem, 0.7vw, 0.65rem);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: #475569;
+}
+
+/* Product name */
+.ps-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.6rem, 3.2vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  color: #F8FAFC;
+  margin: 0;
+}
+
+/* Description */
+.ps-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.82rem, 1vw, 0.95rem);
+  color: #64748B;
+  line-height: 1.7;
+  margin: 0;
+  max-width: 560px;
+}
+
+/* ── Spec pills row ──────────────────────────────────────── */
+.ps-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  width: 100%;
+}
+
+.ps-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 18px;
+  gap: 3px;
+  cursor: default;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  min-width: 120px;
+}
+
+.ps-pill-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #475569;
+}
+
+.ps-pill-value {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.72rem, 0.85vw, 0.82rem);
+  font-weight: 600;
+  color: #CBD5E1;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* ── Feature chips ───────────────────────────────────────── */
+.ps-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.ps-chip {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.6rem, 0.7vw, 0.67rem);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #93C5FD;
+  background: rgba(37,99,235,0.07);
+  border: 1px solid rgba(37,99,235,0.2);
+  padding: 5px 14px;
+  border-radius: 20px;
+  cursor: default;
+  backdrop-filter: blur(6px);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+.ps-chip:hover {
+  color: #fff;
+  border-color: rgba(37,99,235,0.55);
+  box-shadow: 0 0 16px rgba(37,99,235,0.2);
+}
+
+/* ── Dot navigation ──────────────────────────────────────── */
+.ps-dots {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.ps-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(37,99,235,0.28);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.ps-dot.active {
+  background: #2563EB;
+  transform: scale(1.6);
+}
+
+/* ── Glass util ──────────────────────────────────────────── */
+.glass {
+  background: rgba(11,18,32,0.55);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(192,199,209,0.08);
+  border-radius: 12px;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 700px) {
+  .ps-image-zone { height: 52vh; }
+  .ps-img-wrap   { width: clamp(260px, 78vw, 400px); height: clamp(260px, 78vw, 400px); }
+  .ps-nav        { width: 40px; height: 40px; top: 36%; }
+  .ps-nav-left   { left: 0.5rem; }
+  .ps-nav-right  { right: 0.5rem; }
+  .ps-name       { font-size: clamp(1.3rem, 5.5vw, 1.8rem); }
+  .ps-pills      { gap: 7px; }
+  .ps-pill       { min-width: 100px; padding: 8px 12px; }
+}
